@@ -27,11 +27,11 @@ export class UsersService {
         await this.users.save(user);
     }
 
-    async updateUser(id: string, updates: Partial<UserDTO>) {
+    async updateUser(id: string, updates: Partial<UserDTO>): Promise<void> {
         await this.users.update(id, updates);
     }
 
-    async deleteUser(id: string) {
+    async deleteUser(id: string): Promise<void> {
         await this.users.delete(id);
     }
 }

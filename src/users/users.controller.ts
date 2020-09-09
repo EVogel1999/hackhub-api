@@ -8,13 +8,9 @@ export class UsersController {
     constructor(private readonly usersService: UsersService) {}
       
     @Get()
-    async getUsers(@Query('page') page, @Query('limit') limit) {
-        if (page && !Number.isInteger(page) || Number.parseInt(page) < 0) {
-            page = 0;
-        }
-        if (limit && !Number.isInteger(limit) || Number.parseInt(limit) <= 0) {
-            limit = 15;
-        }
+    async getUsers(@Query('page') page: any = '10', @Query('limit') limit: any = '15') {
+        page = Number.parseInt(page);
+        limit = Number.parseInt(limit);
 
         return await this.usersService.getUsers(page, limit);
     }
@@ -29,11 +25,13 @@ export class UsersController {
         await this.usersService.createUser(user);
     }
 
+    // TODO: Authenticate
     @Patch(':id')
     async updateUser(@Param() params, @Body() updates: Partial<UserDTO>) {
         await this.usersService.updateUser(params.id, updates);
     }
 
+    // TODO: Authenticate
     @Delete(':id')
     async deleteUser(@Param() params) {
         await this.usersService.deleteUser(params.id);
