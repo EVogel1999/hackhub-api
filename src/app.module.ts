@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ElasticsearchModule } from '@nestjs/elasticsearch';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,6 +10,10 @@ import { ProjectsModule } from './projects/projects.module';
 @Module({
   imports: [
     UsersModule,
+    ProjectsModule,
+    ElasticsearchModule.register({
+      node: process.env.ELASTIC_CONNECTION_URI,
+    }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: process.env.MONGODB_CONNECTION_URI,
@@ -19,7 +24,6 @@ import { ProjectsModule } from './projects/projects.module';
       useUnifiedTopology: true,
       useNewUrlParser: true
     }),
-    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

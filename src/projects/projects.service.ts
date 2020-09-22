@@ -3,12 +3,14 @@ import { Project } from 'src/entities/project.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MongoRepository } from 'typeorm';
 import { ProjectDTO } from 'src/DTOs/project.dto';
+import { ElasticsearchService } from '@nestjs/elasticsearch';
 
 @Injectable()
 export class ProjectsService {
     constructor(
         @InjectRepository(Project)
         private readonly projects: MongoRepository<Project>,
+        private readonly elasticsearch: ElasticsearchService
     ) {}
 
     async getProjects(page: number, limit: number): Promise<Project[]> {
@@ -24,7 +26,7 @@ export class ProjectsService {
     }
 
     async createProject(project: ProjectDTO): Promise<void> {
-        await this.projects.save(project);
+        const created = await this.projects.save(project);
     }
 
     async updateProject(id: string, updates: Partial<ProjectDTO>): Promise<void> {
