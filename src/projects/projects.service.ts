@@ -10,7 +10,7 @@ export class ProjectsService {
     constructor(
         @InjectRepository(Project)
         private readonly projects: MongoRepository<Project>,
-        private readonly elasticsearch: ElasticsearchService
+        // private readonly elasticsearch: ElasticsearchService
     ) {}
 
     async getProjects(page: number, limit: number): Promise<Project[]> {

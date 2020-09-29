@@ -11,9 +11,9 @@ import { ProjectsModule } from './projects/projects.module';
   imports: [
     UsersModule,
     ProjectsModule,
-    ElasticsearchModule.register({
-      node: process.env.ELASTIC_CONNECTION_URI,
-    }),
+    // ElasticsearchModule.register({
+    //   node: process.env.ELASTIC_CONNECTION_URI,
+    // }),
     TypeOrmModule.forRoot({
       type: 'mongodb',
       url: process.env.MONGODB_CONNECTION_URI,

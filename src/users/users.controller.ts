@@ -1,6 +1,7 @@
-import { Controller, Get, Param, Post, Patch, Delete, Query, Body } from '@nestjs/common';
+import { Controller, Get, Param, Post, Patch, Delete, Query, Body, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UserDTO } from 'src/DTOs/user.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UsersController {
@@ -27,12 +28,14 @@ export class UsersController {
 
     // TODO: Authenticate
     @Patch(':id')
+    // @UseGuards(AuthGuard('google'))
     async updateUser(@Param() params, @Body() updates: Partial<UserDTO>) {
         await this.usersService.updateUser(params.id, updates);
     }
 
     // TODO: Authenticate
     @Delete(':id')
+    // @UseGuards(AuthGuard('google'))
     async deleteUser(@Param() params) {
         await this.usersService.deleteUser(params.id);
     }
