@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Patch, Delete, Query, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Patch, Delete, Query, Param, Body, UseGuards, Req } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
 import { ProjectDTO } from 'src/DTOs/project.dto';
+import { AuthorizerService } from './authorizer/authorizer.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('projects')
 export class ProjectsController {
 
-    constructor(private readonly projectsService: ProjectsService) {}
+    constructor(private readonly projectsService: ProjectsService, private readonly authorizerService: AuthorizerService) {}
 
     @Get()
     async getProjects(@Query('page') page: any = '10', @Query('limit') limit: any = '15') {
@@ -17,25 +19,28 @@ export class ProjectsController {
 
     // TODO: Authenticate if visible
     @Get(':id')
-    async getProject(@Param() params) {
+    async getProject(@Req() req, @Param() params) {
         return await this.projectsService.getProject(params.id);
     }
 
     // TODO: Authenticate
     @Post()
-    async createProject(@Body() project: ProjectDTO) {
+    @UseGuards(AuthGuard('jwt'))
+    async createProject(@Req() req, @Body() project: ProjectDTO) {
         await this.projectsService.createProject(project);
     }
 
-    // TODO: Authenticate
     @Patch(':id')
-    async updateProject(@Param() params, @Body() updates: Partial<ProjectDTO>) {
+    @UseGuards(AuthGuard('jwt'))
+    async updateProject(@Req() req, @Param() params, @Body() updates: Partial<ProjectDTO>) {
+        await this.authorizerService.validateIsProjectOwner(params.id, req.user);
         await this.projectsService.updateProject(params.id, updates);
     }
 
-    // TODO: Authenticate
     @Delete(':id')
-    async deleteProject(@Param() params) {
+    @UseGuards(AuthGuard('jwt'))
+    async deleteProject(@Req() req, @Param() params) {
+        await this.authorizerService.validateIsProjectOwner(params.id, req.user);
         await this.projectsService.deleteProject(params.id);
     }
 }
