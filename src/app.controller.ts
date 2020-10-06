@@ -17,14 +17,4 @@ export class AppController {
   getConfig() {
     return { clientID: process.env.GOOGLE_CLIENT_ID };
   }
-
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  googleAuth() {}
-
-  @Get('google/redirect')
-  @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req) {
-    return this.appService.googleLogin(req);
-  }
 }
