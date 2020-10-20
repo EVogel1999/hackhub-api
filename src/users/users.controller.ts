@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Patch, Delete, Query, Body, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Delete, Query, Body, UseGuards, Req, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { UsersService } from './users.service';
 import { UserDTO } from 'src/DTOs/user.dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -15,8 +16,11 @@ export class UsersController {
 
     @Get('google/redirect')
     @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() req) {
-        return this.usersService.googleLogin(req.user);
+    async googleAuthRedirect(@Req() req, @Res() response: Response) {
+        const token = await this.usersService.googleLogin(req.user);
+        response.cookie('hackhub', token);
+        response.redirect(process.env.CLIENT_BASE_URL || 'http://localhost:4200');
+        return response.sendStatus(200)
     }
       
     @Get('users')

@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:alpine
 
 WORKDIR /usr/src/app
 
@@ -6,10 +6,8 @@ ENV PORT 8080
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm install --production
 
-COPY . .
-
-RUN npm run build
+COPY ./dist ./dist
 
 CMD ["npm", "run", "start:prod"]
