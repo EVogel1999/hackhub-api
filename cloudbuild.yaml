@@ -20,4 +20,4 @@ steps:
 # Deploy to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'api', '--image', 'gcr.io/$PROJECT_ID/api', '--region', 'us-central1', '--platform', 'managed', '--update-env-vars', 'GOOGLE_CLIENT_ID=projects/$PROJECT_ID/secrets/GOOGLE_CLIENT_ID,MONGODB_CONNECTION_URI=projects/$PROJECT_ID/secrets/MONGODB_CONNECTION_URI,JWT_SECRET=projects/$PROJECT_ID/secrets/JWT_SECRET']
+  args: ['run', 'deploy', 'api', '--image', 'gcr.io/$PROJECT_ID/api', '--region', 'us-central1', '--platform', 'managed', '--update-env-vars', 'GOOGLE_CLIENT_ID=projects/$PROJECT_ID/secrets/GOOGLE_CLIENT_ID,GOOGLE_SECRET=projects/$PROJECT_ID/secrets/GOOGLE_SECRET,MONGODB_CONNECTION_URI=projects/$PROJECT_ID/secrets/MONGODB_CONNECTION_URI,JWT_SECRET=projects/$PROJECT_ID/secrets/JWT_SECRET']
