@@ -30,7 +30,9 @@ import { ConfigService } from '@nestjs/config';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: async (configService: ConfigService) => {
+        console.log('\n\n\n\n', configService.get('DATABASE'))
+        return {
         type: 'mongodb',
         url: configService.get('MONGODB_CONNECTION_URI'),
         database: configService.get('DATABASE'),
@@ -39,7 +41,7 @@ import { ConfigService } from '@nestjs/config';
         ],
         useUnifiedTopology: true,
         useNewUrlParser: true
-      }),
+      }},
     }),
   ],
   controllers: [AppController],
