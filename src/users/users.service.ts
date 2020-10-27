@@ -25,9 +25,9 @@ export class UsersService {
         // Create the new user if they exist
         const u = await this.getUser(user.id);
         if (u) {
-          this.updateUser(user.id, user);
+          await this.updateUser(user.id, user);
         } else {
-          this.createUser(user);
+          await this.createUser(user);
         }
     
         // Create JWT token

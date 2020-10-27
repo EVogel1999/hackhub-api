@@ -6,11 +6,13 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ProjectsModule } from './projects/projects.module';
+import { ConfigModule } from '@nestjs/config/dist/config.module';
 
 @Module({
   imports: [
     UsersModule,
     ProjectsModule,
+    ConfigModule.forRoot(),
     // ElasticsearchModule.register({
     //   node: process.env.ELASTIC_CONNECTION_URI,
     // }),
