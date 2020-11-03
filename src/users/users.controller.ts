@@ -22,6 +22,12 @@ export class UsersController {
         response.status(200);
         response.redirect(process.env.CLIENT_BASE_URL || 'http://localhost:4200');
     }
+
+    @Get('users/token')
+    @UseGuards(AuthGuard('jwt'))
+    async getUserForToken(@Req() req) {
+        return await this.usersService.getUser(req.user.id);
+    }
       
     @Get('users')
     async getUsers(@Query('page') page: any = '10', @Query('limit') limit: any = '15') {

@@ -31,17 +31,17 @@ import { ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        console.log('\n\n\n\n', configService.get('DATABASE'))
         return {
-        type: 'mongodb',
-        url: configService.get('MONGODB_CONNECTION_URI'),
-        database: configService.get('DATABASE'),
-        entities: [
-          __dirname + '/**/*.entity{.ts,.js}',
-        ],
-        useUnifiedTopology: true,
-        useNewUrlParser: true
-      }},
+          type: 'mongodb',
+          url: configService.get('MONGODB_CONNECTION_URI'),
+          database: configService.get('DATABASE'),
+          entities: [
+            __dirname + '/**/*.entity{.ts,.js}',
+          ],
+          useUnifiedTopology: true,
+          useNewUrlParser: true
+        }
+      },
     }),
   ],
   controllers: [AppController],
