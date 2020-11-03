@@ -30,7 +30,7 @@ export class UsersController {
     }
       
     @Get('users')
-    async getUsers(@Query('page') page: any = '10', @Query('limit') limit: any = '15') {
+    async getUsers(@Query('page') page: any = '0', @Query('limit') limit: any = '15') {
         page = Number.parseInt(page);
         limit = Number.parseInt(limit);
 

@@ -21,6 +21,12 @@ export class ProjectsService {
         ]).toArray();
     }
 
+    async getUserProjects(id: string): Promise<Project[]> {
+        return await this.projects.aggregate([
+            { $match: {authorID: id} }
+        ]).toArray();
+    }
+
     async getProject(id: string): Promise<Project> {
         return await this.projects.findOne(id);
     }
