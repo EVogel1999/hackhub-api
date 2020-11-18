@@ -25,6 +25,6 @@ steps:
 # Deploy to Cloud Run
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: gcloud
-  args: ['run', 'deploy', 'api', '--image', 'gcr.io/$PROJECT_ID/api-staging', '--region', 'us-central1', '--platform', 'managed']
+  args: ['run', 'deploy', 'api-staging', '--image', 'gcr.io/$PROJECT_ID/api-staging', '--region', 'us-central1', '--platform', 'managed']
     
 images: ['gcr.io/$PROJECT_ID/api-staging']
