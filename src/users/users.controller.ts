@@ -18,7 +18,7 @@ export class UsersController {
     @UseGuards(AuthGuard('google'))
     async googleAuthRedirect(@Req() req, @Res() response: Response) {
         const token = await this.usersService.googleLogin(req.user);
-        console.log(token != undefined);
+        console.log(token);
         console.log(process.env.CLIENT_BASE_URL);
         response.cookie('hackhub', token);
         response.status(200);
