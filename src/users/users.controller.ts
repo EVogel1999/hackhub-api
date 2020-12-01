@@ -19,6 +19,7 @@ export class UsersController {
     async googleAuthRedirect(@Req() req, @Res() response: Response) {
         const token = await this.usersService.googleLogin(req.user);
         console.log(token != undefined);
+        console.log(process.env.CLIENT_BASE_URL);
         response.cookie('hackhub', token);
         response.status(200);
         response.redirect(process.env.CLIENT_BASE_URL || 'http://localhost:4200');
